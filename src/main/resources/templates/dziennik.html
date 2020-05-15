@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dziennik</title>
+    <link rel="stylesheet" href="dziennik.css"/>
+</head>
+<body>
+<h1>dziennik elektroniczny</h1>
+<br/>
+<!--<p th:text="${all}"></p>-->
+<!--<form:inputText name="userName" value="${student.nazwisko}" />-->
+<!--<input type="text" name="userName" value="James Carrot" th:value="${student.imie}" />-->
+<br/>
+
+
+
+<table>
+    <tr>
+        <th>IMIE</th>
+        <th>NAZWISKO</th>
+        <th>KLASA</th>
+    </tr>
+    <tr th:each="stud : ${all}">
+        <td th:text="${stud.imie}">imie</td>
+        <td th:text="${stud.nazwisko}">nazwisko</td>
+        <td th:text="${stud.klasa}">klasa</td>
+
+    </tr>
+</table>
+
+</body>
+</html>
