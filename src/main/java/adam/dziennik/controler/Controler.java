@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.swing.*;
 import java.util.List;
 
 @Controller
@@ -19,27 +20,31 @@ public class Controler {
     @Autowired
     OcenyRepo ocenyRepo;
 
-    @GetMapping("/add/{imie}_{nazwisko}_{klasa}")
-    @ResponseBody
-    public String addStudent(@PathVariable String imie, @PathVariable String nazwisko, @PathVariable String klasa) {
+
+    @PostMapping("/add")
+    public String addStudent(@ModelAttribute Student student) {
+
         Student stud = new Student();
-        stud.setImie(imie);
-        stud.setNazwisko(nazwisko);
-        stud.setKlasa(klasa);
+        stud.setId(student.getId());
+        stud.setImie(student.getImie());
+        stud.setNazwisko(student.getNazwisko());
+        stud.setKlasa(student.getKlasa());
         studentRepository.save(stud);
-        return "dodano Studenta: " + imie + " " + nazwisko;
+        return "redirect:/Student/all";
     }
 
     @GetMapping("/all")
     public String getAllStudents(Model model) {
 model.addAttribute("all",studentRepository.findAll());
+model.addAttribute("addStudent", new Student());
         return "dziennik";
     }
 
-    @GetMapping("/hello")
 
+    @GetMapping("/hello")
+@ResponseBody
     public String ssy() {
-        return "dziennik";
+        return "hi";
     }
 
     @GetMapping("/oceny")
@@ -47,14 +52,16 @@ model.addAttribute("all",studentRepository.findAll());
         return studentRepository.FindAllWithDescriptionQuery();
     }
 
-    @GetMapping("/oceny/{iducznia}_{polski}_{matematyka}")
-    @ResponseBody
-    public String addStudent(@PathVariable Integer iducznia, @PathVariable Integer polski, @PathVariable Integer matematyka) {
-        Oceny oceny = new Oceny();
-        oceny.setIdUcznia(iducznia);
-        oceny.setPolski(polski);
-        oceny.setMatematyka(matematyka);
-        ocenyRepo.save(oceny);
-        return "dodano ocene";
+    public void  getAllStud(){
+        System.out.println(studentRepository.findAll());
+    }
+    @GetMapping("ad/{imie}_{nazwisko}_{klasa}")
+    public String addStuden(@PathVariable String imie, @PathVariable String nazwisko,@PathVariable String klasa) {
+        Student stud = new Student();
+        stud.setImie(imie);
+        stud.setNazwisko(nazwisko);
+        stud.setKlasa(klasa);
+        studentRepository.save(stud);
+        return "dodano: "+imie+" "+nazwisko+" "+klasa;
     }
 }
