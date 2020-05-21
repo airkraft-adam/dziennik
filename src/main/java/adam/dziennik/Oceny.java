@@ -11,8 +11,8 @@ public class Oceny {
     private Integer IdUcznia;
     private Integer polski;
     private Integer matematyka;
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="idUcznia")
+//    @ManyToOne
+//    @JoinColumn( name="idUcznia")
 //    private Student student;
 
     public Oceny() {    }

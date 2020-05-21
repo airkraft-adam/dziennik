@@ -8,19 +8,19 @@ import java.util.List;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String klasa;
     private String imie;
     private String nazwisko;
-    @OneToMany(targetEntity = Oceny.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ocenyStud_fk", referencedColumnName = "id")
-    private List<Oceny> ocenyList;
+//    @OneToMany(targetEntity = Oceny.class, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "ocenyStud_fk", referencedColumnName = "id")
+//    private List<Oceny> ocenyList;
 
     public Student() {
     }
 
-    public Student(Integer id, String klasa, String imie, String nazwisko) {
+    public Student(Integer id, String imie, String nazwisko, String klasa) {
         this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -33,13 +33,13 @@ public class Student {
         this.klasa = klasa;
     }
 
-    public List<Oceny> getOcenyList() {
-        return ocenyList;
-    }
-
-    public void setOcenyList(List<Oceny> ocenyList) {
-        this.ocenyList = ocenyList;
-    }
+//    public List<Oceny> getOcenyList() {
+//        return ocenyList;
+//    }
+//
+//    public void setOcenyList(List<Oceny> ocenyList) {
+//        this.ocenyList = ocenyList;
+//    }
 
     public Integer getId() {
         return id;
@@ -80,7 +80,7 @@ public class Student {
                 ", klasa='" + klasa + '\'' +
                 ", imie='" + imie + '\'' +
                 ", nazwisko='" + nazwisko + '\'' +
-                ", ocenyList=" + ocenyList +
+//                ", ocenyList=" + ocenyList +
                 '}';
     }
 }

@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Dziennik</title>
-    <link rel="stylesheet" href="dziennik.css"/>
+    <link rel="stylesheet" href="dziennik.css"type="text/css"/>
 </head>
 <body>
 <h1>dziennik elektroniczny</h1>
 <br/>
 <!--<p th:text="${all}"></p>-->
-<!--<form:inputText name="userName" value="${student.nazwisko}" />-->
 <!--<input type="text" name="userName" value="James Carrot" th:value="${student.imie}" />-->
 <br/>
 
+<form th:action="@{/Student/add}" th:object="${addStudent}" method="post">
+    <p>podaj imie: <input type="text" th:field="*{imie}"/></p>
+    <p>podaj nazwisko: <input type="text" th:field="*{nazwisko}"/></p>
+    <p>podaj klase: <input type="text" th:field="*{klasa}"/></p>
+    <p><input type="submit" value="dodaj Studenta"/></p>
+</form>
 
 
 <table>

@@ -19,17 +19,21 @@ public class Controler {
     StudentRepository studentRepository;
     @Autowired
     OcenyRepo ocenyRepo;
+//    @Autowired
+//    Okienko okienko;
 
 
     @PostMapping("/add")
     public String addStudent(@ModelAttribute Student student) {
-
+        System.out.println("Student: "+ student);
         Student stud = new Student();
         stud.setId(student.getId());
         stud.setImie(student.getImie());
         stud.setNazwisko(student.getNazwisko());
         stud.setKlasa(student.getKlasa());
-        studentRepository.save(stud);
+        System.out.println("Stud:" + stud);
+        System.out.println("Repo: " + studentRepository);
+        Student save = studentRepository.save(stud);
         return "redirect:/Student/all";
     }
 
@@ -41,27 +45,27 @@ model.addAttribute("addStudent", new Student());
     }
 
 
-    @GetMapping("/hello")
-@ResponseBody
-    public String ssy() {
-        return "hi";
-    }
+//    @GetMapping("/hello")
+//@ResponseBody
+//    public String ssy() {
+//        return "hi";
+//    }
 
-    @GetMapping("/oceny")
-    public List<ZestawienieJoin> getAllNotes() {
-        return studentRepository.FindAllWithDescriptionQuery();
-    }
-
-    public void  getAllStud(){
-        System.out.println(studentRepository.findAll());
-    }
-    @GetMapping("ad/{imie}_{nazwisko}_{klasa}")
-    public String addStuden(@PathVariable String imie, @PathVariable String nazwisko,@PathVariable String klasa) {
-        Student stud = new Student();
-        stud.setImie(imie);
-        stud.setNazwisko(nazwisko);
-        stud.setKlasa(klasa);
-        studentRepository.save(stud);
-        return "dodano: "+imie+" "+nazwisko+" "+klasa;
-    }
+//    @GetMapping("/oceny")
+//    public List<ZestawienieJoin> getAllNotes() {
+//        return studentRepository.FindAllWithDescriptionQuery();
+//    }
+//
+//    public void  getAllStud(){
+//        System.out.println(studentRepository.findAll());
+//    }
+//    @GetMapping("ad/{imie}_{nazwisko}_{klasa}")
+//    public String addStuden(@PathVariable String imie, @PathVariable String nazwisko,@PathVariable String klasa) {
+//        Student stud = new Student();
+//        stud.setImie(imie);
+//        stud.setNazwisko(nazwisko);
+//        stud.setKlasa(klasa);
+//        studentRepository.save(stud);
+//        return "dodano: "+imie+" "+nazwisko+" "+klasa;
+//    }
 }
