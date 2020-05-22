@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class Okienko extends JFrame implements ActionListener {
 
     //    @Autowired
-    Controler controler;ł
+    Controler controler;
 
 
     JComboBox<String> lista;
