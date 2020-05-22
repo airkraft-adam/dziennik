@@ -10,6 +10,4 @@ import java.util.List;
 public interface StudentRepository extends CrudRepository<Student, Integer> {
 List<Student> findAll();
 
-//    @Query("SELECT new adam.dziennik.ZestawienieJoin(s.imie, s.nazwisko, o.matematyka, o.polski ) FROM Student s JOIN s.ocenyList o")
-//    List<ZestawienieJoin> FindAllWithDescriptionQuery();
 }

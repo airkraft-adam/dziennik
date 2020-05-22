@@ -1,15 +1,16 @@
 package adam.dziennik.controler;
 
 import adam.dziennik.*;
-import adam.dziennik.repository.OcenyRepo;
 import adam.dziennik.repository.StudentRepository;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.swing.*;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -17,55 +18,42 @@ import java.util.List;
 public class Controler {
     @Autowired
     StudentRepository studentRepository;
-    @Autowired
-    OcenyRepo ocenyRepo;
-//    @Autowired
-//    Okienko okienko;
-
 
     @PostMapping("/add")
     public String addStudent(@ModelAttribute Student student) {
-        System.out.println("Student: "+ student);
+        System.out.println("Student: " + student);
         Student stud = new Student();
         stud.setId(student.getId());
         stud.setImie(student.getImie());
         stud.setNazwisko(student.getNazwisko());
         stud.setKlasa(student.getKlasa());
-        System.out.println("Stud:" + stud);
-        System.out.println("Repo: " + studentRepository);
         Student save = studentRepository.save(stud);
         return "redirect:/Student/all";
     }
 
     @GetMapping("/all")
     public String getAllStudents(Model model) {
-model.addAttribute("all",studentRepository.findAll());
-model.addAttribute("addStudent", new Student());
+        model.addAttribute("all", czas());
+        model.addAttribute("addStudent", new Student());
         return "dziennik";
     }
 
 
-//    @GetMapping("/hello")
-//@ResponseBody
-//    public String ssy() {
-//        return "hi";
-//    }
+    public List<Student> getAllStud() {
+        return studentRepository.findAll();
+    }
 
-//    @GetMapping("/oceny")
-//    public List<ZestawienieJoin> getAllNotes() {
-//        return studentRepository.FindAllWithDescriptionQuery();
-//    }
-//
-//    public void  getAllStud(){
-//        System.out.println(studentRepository.findAll());
-//    }
-//    @GetMapping("ad/{imie}_{nazwisko}_{klasa}")
-//    public String addStuden(@PathVariable String imie, @PathVariable String nazwisko,@PathVariable String klasa) {
-//        Student stud = new Student();
-//        stud.setImie(imie);
-//        stud.setNazwisko(nazwisko);
-//        stud.setKlasa(klasa);
-//        studentRepository.save(stud);
-//        return "dodano: "+imie+" "+nazwisko+" "+klasa;
-//    }
+    public List<Student> czas() {
+        Comparator<Student> studentComparator = new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return new CompareToBuilder()
+                        .append(o1.getKlasa(), o2.getKlasa())
+                        .build();
+            }
+        };
+        List<Student> all = studentRepository.findAll();
+        Collections.sort(all, studentComparator);
+        return all;
+    }
 }

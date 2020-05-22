@@ -1,26 +1,20 @@
 package adam.dziennik;
 
 import adam.dziennik.controler.Controler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
 
-//@SpringBootApplication
-@Controller
+@Component
 public class Okienko extends JFrame implements ActionListener {
 
-    @Autowired
-    Controler controler;
+    //    @Autowired
+    Controler controler;ł
+
 
     JComboBox<String> lista;
     TextField jeden;
@@ -29,19 +23,18 @@ public class Okienko extends JFrame implements ActionListener {
     String imie;
     String nazwisko;
     String klasa;
-    TextField id;
 
 
-    public Okienko() {
+    public Okienko(Controler contr) {
+        controler = contr;
         setLayout(null);
-        setSize(900, 500);
+        setSize(900, 800);
         setTitle("E_dziennik");
 
         lista = new JComboBox<String>();
         lista.setBounds(50, 150, 100, 20);
         lista.addItem("dodaj ucznia");
         lista.addItem("wstaw ocene");
-        lista.addActionListener(this);
 
 
         ImageIcon imgicon = new ImageIcon("c:/ws/dziennik/images.jpg");
@@ -61,13 +54,15 @@ public class Okienko extends JFrame implements ActionListener {
         Font font = new Font("Courier", Font.ITALIC, 22);
         opis.setFont(font);
 
-        id = new TextField();
-        id.setBounds(10, 80, 30, 30);
+
         jeden = new TextField();
         jeden.setBounds(50, 80, 100, 30);
+        jeden.setText("imie");
         dwa = new TextField();
+        dwa.setText("nazwisko");
         dwa.setBounds(175, 80, 100, 30);
         trzy = new TextField();
+        trzy.setText("klasa");
         trzy.setBounds(300, 80, 100, 30);
         trzy.setFont(new Font("", Font.BOLD | Font.CENTER_BASELINE, 18));
 
@@ -75,10 +70,29 @@ public class Okienko extends JFrame implements ActionListener {
         button1.setBounds(350, 250, 80, 20);
         button1.addActionListener(this);
 
-        JButton button2 = new JButton("Pokaż");
-        button2.setBounds(350, 300, 300, 20);
-        button2.addActionListener(this);
-        add(id);
+
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        JTable tabela = new JTable(defaultTableModel);
+
+        defaultTableModel.addColumn("id");
+        defaultTableModel.addColumn("imie");
+        defaultTableModel.addColumn("nazwisko");
+        defaultTableModel.addColumn("klasa");
+
+        for (Student stud : controler.getAllStud()) {
+            defaultTableModel.addRow(new Object[]{
+                            stud.getId(),
+                            stud.getImie(),
+                            stud.getNazwisko(),
+                            stud.getKlasa()
+                    }
+            );
+        }
+        JScrollPane jScrollPane = new JScrollPane(tabela);
+        jScrollPane.setBounds(100, 350, 700, 200);
+        add(jScrollPane);
+
+
         add(dwa);
         add(trzy);
         add(jeden);
@@ -86,25 +100,18 @@ public class Okienko extends JFrame implements ActionListener {
         add(hedder);
         add(lista);
         add(button1);
-        add(button2);
+
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        String wykres = (String) lista.getSelectedItem();
-//        Integer Id = Integer.valueOf(id.getText());
         String imie = jeden.getText();
         String nazwisko = dwa.getText();
         String klasa = trzy.getText();
-//        System.out.println(imie + " " + nazwisko + " " + klasa);
         Student stud = new Student(imie, nazwisko, klasa);
-//        System.out.println(stud);
-
-
-//        controler.addStudent(stud);
-//controler.getAllStud();
+        controler.addStudent(stud);
 
 
     }

@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>Dziennik</title>
     <link rel="stylesheet" href="dziennik.css"type="text/css"/>
+    <style>
+        body{
+background-color:#161616;
+color:#456789}
+    </style>
 </head>
 <body>
 <h1>dziennik elektroniczny</h1>
 <br/>
-<!--<p th:text="${all}"></p>-->
-<!--<input type="text" name="userName" value="James Carrot" th:value="${student.imie}" />-->
 <br/>
 
 <form th:action="@{/Student/add}" th:object="${addStudent}" method="post">

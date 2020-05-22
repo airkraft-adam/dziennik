@@ -13,9 +13,6 @@ public class Student {
     private String klasa;
     private String imie;
     private String nazwisko;
-//    @OneToMany(targetEntity = Oceny.class, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "ocenyStud_fk", referencedColumnName = "id")
-//    private List<Oceny> ocenyList;
 
     public Student() {
     }
@@ -80,7 +77,6 @@ public class Student {
                 ", klasa='" + klasa + '\'' +
                 ", imie='" + imie + '\'' +
                 ", nazwisko='" + nazwisko + '\'' +
-//                ", ocenyList=" + ocenyList +
                 '}';
     }
 }
